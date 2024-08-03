@@ -126,8 +126,8 @@
         <a href="#">Doctors</a>
         <a href="#">News</a>
         <a href="#">Contact</a>
-        <a href="#" class="btn">Make an appointment</a>
-        <a href="../accueil.php">Logout</a>
+        <a href="appointment.php">Make an appointment</a>
+        <a href="../accueil.php" class="btn">Logout</a>
     </nav>
     <h1>Healthy Living</h1>
     <p>Let's make your life happier</p>
