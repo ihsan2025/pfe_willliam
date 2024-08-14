@@ -15,7 +15,7 @@
         }
         header {
             position: relative;
-            background: url('../images/doctor2.jpg') no-repeat center center/cover;
+            background: url('images/doctor2.jpg') no-repeat center center/cover;
             height: 100vh;
             color: white;
             display: flex;
@@ -121,13 +121,12 @@
 
 <header>
     <nav>
-        <a href="#">Home</a>
-        <a href="#">About Us</a>
-        <a href="#">Doctors</a>
-        <a href="#">News</a>
-        <a href="#">Contact</a>
-        <a href="appointment.php">Make an appointment</a>
-        <a href="../accueil.php" class="btn">Logout</a>
+        <a href="Home.html">Home</a>
+        <a href="About.html">About Us</a>
+        <a href="doctors.html">Doctors</a>
+        <a href="News.php">News</a>
+        <a href="Contact.php">Contact</a>
+        <a href="login.php" class="btn">Login</a>
     </nav>
     <h1>Healthy Living</h1>
     <p>Let's make your life happier</p>
@@ -140,7 +139,7 @@
         <p>We provide dedicated care for the elderly, ensuring they lead happy and healthy lives. Our team of professionals is here to support and assist every step of the way.</p>
         <p>With personalized care plans and a compassionate approach, we aim to enhance the quality of life for every individual we serve.</p>
         <div class="doctor-info">
-            <img src="../images/doctor.jpg" alt="Dr. Neil Jackson">
+            <img src="images/doctor.jpg" alt="Dr. Neil Jackson">
             <span>
                 <strong>Dr. Neil Jackson</strong><br>
                 General Principal
@@ -148,7 +147,7 @@
         </div>
     </div>
     <div class="about-image">
-        <img src="../images/doctor3.jpg" alt="Healthcare Professional">
+        <img src="images/doctor3.jpg" alt="Healthcare Professional">
     </div>
 </div>
 
