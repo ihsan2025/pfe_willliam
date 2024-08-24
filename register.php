@@ -54,10 +54,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patient Registration</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -163,6 +169,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     </script>
 </head>
+
 <body>
     <div class="container">
         <img src="images/logo.png" alt="Hospital Logo">
@@ -180,8 +187,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="form-group">
                 <input type="email" id="email" name="email" placeholder="Your Email" required>
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <input type="password" id="password" name="password" placeholder="Password" required>
+                <button class="btn btn-outline-secondary" onclick="regeneratePassword()" type="button">
+                    <i class="bi bi-arrow-repeat"></i>
+                </button>
+            </div> -->
+            <div class="input-group">
+                <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+                <button class="btn btn-outline-secondary" onclick="regeneratePassword()" type="button">
+                    <i class="bi bi-arrow-repeat"></i>
+                </button>
+                <button class="btn btn-outline-secondary" onclick="togglePasswordVisibility()" type="button">
+                    <i id="togglePasswordIcon" class="bi bi-eye"></i>
+                </button>
             </div>
             <div class="form-group">
                 <label for="sex">Sex:</label>
@@ -196,5 +215,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             Already have an account? <a href="login.php">Login here</a>
         </div>
     </div>
+
+    <script>
+        function generateRandomPassword(length) {
+            const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";
+            let password = "";
+            for (let i = 0; i < length; i++) {
+                const randomIndex = Math.floor(Math.random() * charset.length);
+                password += charset[randomIndex];
+            }
+            return password;
+        }
+
+        function regeneratePassword() {
+            const newPassword = generateRandomPassword(12);
+            const passwordInput = document.getElementById("password");
+            passwordInput.value = newPassword;
+        }
+
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById("password");
+            const togglePasswordIcon = document.getElementById("togglePasswordIcon");
+
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                togglePasswordIcon.classList.remove("bi-eye");
+                togglePasswordIcon.classList.add("bi-eye-slash");
+            } else {
+                passwordInput.type = "password";
+                togglePasswordIcon.classList.remove("bi-eye-slash");
+                togglePasswordIcon.classList.add("bi-eye");
+            }
+        }
+
+        // Automatically generate a password when the page loads
+        regeneratePassword();
+    </script>
 </body>
+
 </html>

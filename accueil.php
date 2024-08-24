@@ -1,3 +1,16 @@
+<?php
+session_start();
+
+// Check if the user is logged in
+if (!isset($_SESSION['username'])) {
+    // Redirect to login page if not logged in
+    header('Location: login.php');
+    exit();
+}
+
+$username = htmlspecialchars($_SESSION['username']);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,7 +44,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.4); /* Adjust the darkness by changing the opacity */
+            background: rgba(0, 0, 0, 0.4);
             z-index: 1;
         }
         header h1, header p, header .btn, nav {
@@ -126,9 +139,9 @@
         <a href="doctors.html">Doctors</a>
         <a href="News.php">News</a>
         <a href="Contact.php">Contact</a>
-        <a href="login.php" class="btn">Login</a>
+        <a href="logout.php" class="btn">Logout</a>
     </nav>
-    <h1>Healthy Living</h1>
+    <h1>Welcome Back, <?php echo $username; ?>!</h1>
     <p>Let's make your life happier</p>
     <a href="#" class="btn">Meet Our Doctors</a>
 </header>

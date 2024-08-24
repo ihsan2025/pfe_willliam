@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Team</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #28a745;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        main {
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .team-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            max-width: 1200px;
+        }
+
+        .team-member, .doctor-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+        }
+
+        .team-member img, .doctor-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 50%;
+        }
+
+        .team-member h3, .doctor-card h3 {
+            margin: 10px 0;
+            color: #333;
+        }
+
+        .team-member p, .doctor-card p {
+            color: #666;
+        }
+
+        .button-group {
+            margin-top: 10px;
+        }
+
+        .button {
+            background-color: #28a745;
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .button.edit {
+            background-color: #007bff;
+        }
+
+        .button.copy {
+            background-color: #ffc107;
+        }
+
+        .button.delete {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Meet Our Team</h1>
+    </header>
+    <main>
+        <div id="team-container" class="team-container">
+            <!-- Team members will be dynamically inserted here -->
+        </div>
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Static data for demonstration purposes
+            const doctors = [
+                {
+                    name: 'Dr. Jane Smith',
+                    specialty: 'Dermatology',
+                    phone: '987-654-3210',
+                    email: 'janesmith@example.com',
+                    fee: '150.00',
+                    date: '2024-08-03 00:00:00',
+                    image: 'images/doctor1.jpg'
+                },
+                {
+                    name: 'Dr. Emily Johnson',
+                    specialty: 'Neurology',
+                    phone: '555-123-4567',
+                    email: 'emilyjohnson@example.com',
+                    fee: '250.00',
+                    date: '2024-08-03 00:00:00',
+                    image: 'images/doctor2.jpg'
+                },
+                {
+                    name: 'Dr. Michael Brown',
+                    specialty: 'Pediatrics',
+                    phone: '444-987-6543',
+                    email: 'michaelbrown@example.com',
+                    fee: '180.00',
+                    date: '2024-08-03 00:00:00',
+                    image: 'images/doctor3.jpg'
+                },
+                {
+                    name: 'Dr. Sarah Davis',
+                    specialty: 'Orthopedics',
+                    phone: '333-456-7890',
+                    email: 'sarahdavis@example.com',
+                    fee: '220.00',
+                    date: '2024-08-03 00:00:00',
+                    image: 'images/doctor4.jpg'
+                },
+                {
+                    name: 'Dr. David Wilson',
+                    specialty: 'Gastroenterology',
+                    phone: '222-123-9876',
+                    email: 'davidwilson@example.com',
+                    fee: '190.00',
+                    date: '2024-08-03 00:00:00',
+                    image: 'images/doctor5.jpg'
+                },
+                {
+                    name: 'Dr. Laura Martinez',
+                    specialty: 'Psychiatry',
+                    phone: '111-654-3210',
+                    email: 'lauramartinez@example.com',
+                    fee: '160.00',
+                    date: '2024-08-03 00:00:00',
+                    image: 'images/doctor6.jpg'
+                },
+                {
+                    name: 'Dr. Robert Taylor',
+                    specialty: 'General Surgery',
+                    phone: '666-789-1234',
+                    email: 'roberttaylor@example.com',
+                    fee: '200.00',
+                    date: '2024-08-03 00:00:00',
+                    image: 'images/doctor7.jpg'
+                }
+            ];
+
+            const container = document.getElementById('team-container');
+            container.innerHTML = doctors.map(doc => `
+                <div class="doctor-card">
+                    <img src="${doc.image}" alt="${doc.name}">
+                    <div class="info">
+                        <h3>${doc.name}</h3>
+                        <p>Specialty: ${doc.specialty}</p>
+                        <p>Phone: ${doc.phone}</p>
+                        <p>Email: ${doc.email}</p>
+                        <p>Fee: $${doc.fee}</p>
+                        <p>Date: ${doc.date}</p>
+                        <div class="button-group">
+                            <button class="button edit">Éditer</button>
+                            <button class="button copy">Copier</button>
+                            <button class="button delete">Supprimer</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        });
+    </script>
+</body>
+
+</html>

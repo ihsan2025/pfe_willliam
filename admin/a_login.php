@@ -8,29 +8,33 @@ $error_message = '';
 // Check if email and password fields are submitted
 if (isset($_POST['email']) && isset($_POST['password'])) {
     $email = $_POST['email'];
-    $password = md5($_POST['password']); // Convert the password to MD5
+    $password = $_POST['password']; // No need to use MD5 for this example
 
     // Escape the values to avoid SQL injections
     $email = mysqli_real_escape_string($conn, $email);
-    $password = mysqli_real_escape_string($conn, $password);
 
-    // SQL query to check email and password in the 'admin' table
-    $query = "SELECT * FROM admin WHERE email = '$email' AND password = '$password'";
+    // Check if the email and password fields are not empty
+    if (!empty($email) && !empty($password)) {
+        // Check if the password is 'admin123'
+        if ($password === 'admin123') {
+            // SQL query to check email in the 'admin' table
+            $query = "SELECT * FROM admin WHERE email = '$email'";
+            $result = mysqli_query($conn, $query);
 
-    // Execute the query
-    $result = mysqli_query($conn, $query);
-
-    // Check if the query returned a row (match found)
-    if (mysqli_num_rows($result) == 1) {
-        // Authentication successful, redirect to a_dashboard.php
-        header("Location: grid/a_dashboard.php");
-        exit();
+            // Check if the query returned a row (match found)
+            if (mysqli_num_rows($result) == 1) {
+                // Authentication successful, redirect to a_dashboard.php
+                header("Location: grid/a_dashboard.php");
+                exit();
+            } else {
+                // Authentication failed, set error message
+                $error_message = "Incorrect email or password.";
+            }
+        } else {
+            $error_message = "Incorrect email or password.";
+        }
     } else {
-        // Authentication failed, set error message
-        // $error_message = "Incorrect email or password.";
-
-        header("Location: grid/a_dashboard.php");
-        exit();
+        $error_message = "Both fields are required.";
     }
 }
 ?>

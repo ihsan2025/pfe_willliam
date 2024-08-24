@@ -34,7 +34,7 @@
                             </thead>
                             <tbody>
                                 <?php
-                                include_once '../connexion.php';  // Adjust path if needed
+                                include_once 'connexion.php';  // Adjust path if needed
 
                                 // Establish connection
                                 $conn = connectDB();

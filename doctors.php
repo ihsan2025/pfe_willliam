@@ -318,7 +318,7 @@ document.getElementById('appointmentForm').addEventListener('submit', function(e
             <input type="email" id="email" name="email" required>
             
             <label for="date">Preferred Date:</label>
-            <input type="date" id="date" name="date" required>
+            <input type="date" id="my-date" name="date" required min="">
             
             <button type="submit">Submit</button>
         </form>
@@ -334,6 +334,14 @@ document.getElementById('appointmentForm').addEventListener('submit', function(e
     </div>
 </div>
 
+<script>
+        // Set the min attribute to today's date
+        function setMinDateToCurrentDate() {
+            const today = new Date().toISOString().split("T")[0];
+            document.getElementById("my-date").setAttribute("min", today);
+        }
+        setMinDateToCurrentDate();
+</script>
 
 </body>
 </html>

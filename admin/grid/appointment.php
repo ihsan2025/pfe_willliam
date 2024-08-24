@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book an Appointment - Assist old person</title>
+    <title>Book an Appointment - Assist Old Person</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        /* Your existing styles */
         body {
             font-family: 'Roboto', sans-serif;
             background-color: #f0f2f5;
@@ -97,6 +98,10 @@
         .btn:hover {
             background-color: #218838;
         }
+        .response-message {
+            margin-top: 20px;
+            color: #333;
+        }
     </style>
 </head>
 <body>
@@ -109,14 +114,14 @@
         <li><a href="#">Doctors</a></li>
         <li><a href="#">News</a></li>
         <li><a href="#">Contact</a></li>
-        <li><a href="appointment.php" >Make an appointment</a></li>
+        <li><a href="appointment.php">Make an appointment</a></li>
         <li><a href="../accueil.php" class="cta">Logout</a></li>
     </ul>
 </nav>
 
 <div class="container">
     <h2>Book an Appointment</h2>
-    <form action="appointment.php" method="post">
+    <form id="appointment-form">
         <div class="form-group">
             <label for="date">Date</label>
             <input type="date" id="date" name="date" required>
@@ -131,11 +136,12 @@
                 <option value="">Select a Doctor</option>
                 <?php
                 include('../connexion.php');
-                $sql = "SELECT name, specialization FROM doctor";
+                $conn = connectDB(); // Ensure the function is defined in your connexion.php file
+                $sql = "SELECT id, name, specialization FROM doctor";
                 $result = $conn->query($sql);
                 if ($result->num_rows > 0) {
                     while($row = $result->fetch_assoc()) {
-                        echo "<option value='" . $row['name'] . "'>" . $row['name'] . " - " . $row['specialization'] . "</option>";
+                        echo "<option value='" . $row['id'] . "'>" . $row['name'] . " - " . $row['specialization'] . "</option>";
                     }
                 } else {
                     echo "<option value=''>No doctors available</option>";
@@ -146,20 +152,69 @@
         </div>
         <button type="submit" class="btn">Submit</button>
     </form>
+    <div id="response-message" class="response-message"></div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('appointment-form');
+    const responseMessage = document.getElementById('response-message');
+
+    form.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent form from submitting traditionally
+        
+        const formData = new FormData(form);
+        
+        // Create a new XMLHttpRequest object
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '', true); // Sending to the same file
+        xhr.onload = function() {
+            if (xhr.status >= 200 && xhr.status < 300) {
+                // Display the response message
+                responseMessage.innerHTML = `
+                    <h3>Appointment Details</h3>
+                    <p><strong>Date:</strong> ${formData.get('date')}</p>
+                    <p><strong>Time:</strong> ${formData.get('time')}</p>
+                    <p><strong>Doctor:</strong> ${formData.get('doctor')}</p>
+                `;
+            } else {
+                responseMessage.innerHTML = '<p style="color: red;">Failed to submit appointment.</p>';
+            }
+        };
+        
+        // Send the request with form data
+        xhr.send(formData);
+    });
+});
+</script>
 
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    include('../connexion.php');
+    $conn = connectDB();
+
     $date = $_POST['date'];
     $time = $_POST['time'];
-    $doctor = $_POST['doctor'];
+    $doctor_id = $_POST['doctor']; // Using doctor ID to reference the doctor
 
-    echo "<div class='container' style='margin-top: 20px;'>
-            <h3>Appointment Details</h3>
-            <p><strong>Date:</strong> $date</p>
-            <p><strong>Time:</strong> $time</p>
-            <p><strong>Doctor:</strong> $doctor</p>
-          </div>";
+    // Query to insert the appointment into the database
+    $sql = "INSERT INTO appointments (date, time, doctor_id) VALUES (?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('ssi', $date, $time, $doctor_id);
+
+    if ($stmt->execute()) {
+        echo "<div class='response-message'>
+                <h3>Appointment Details</h3>
+                <p><strong>Date:</strong> $date</p>
+                <p><strong>Time:</strong> $time</p>
+                <p><strong>Doctor:</strong> " . htmlspecialchars($_POST['doctor']) . "</p>
+              </div>";
+    } else {
+        echo "<div class='response-message' style='color: red;'>Failed to book the appointment. Error: " . $stmt->error . "</div>";
+    }
+
+    $stmt->close();
+    $conn->close();
 }
 ?>
 

@@ -150,6 +150,7 @@
                     </ul>
                 </li>
                 <li><a href="appointment.php" target="main-frame"><i class="fas fa-calendar-alt icon"></i>Appointment</a></li>
+                <li><a href="appointment_list.php" target="main-frame"><i class="fas fa-calendar-alt icon"></i>Research_Appointment</a></li>
             </ul>
         </div>
 
